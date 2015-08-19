@@ -21,7 +21,7 @@
    <preference name="fullscreen" value="false" />
    
    <preference name="SplashScreen" value="splash" /> 
-   <preference name="SplashScreenDelay" value="2000" />  
+   <preference name="SplashScreenDelay" value="1500" />  
    
   
    <gap:plugin name="org.apache.cordova.battery-status" />
