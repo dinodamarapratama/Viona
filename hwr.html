@@ -105,7 +105,7 @@ table td {
  var data6_s1 = 0;
  var data6_s2 = 0;
  
-var ctx, color = "#000";	
+var ctx, color = "#F43C60";	
 document.addEventListener( "DOMContentLoaded", function(){
     newCanvas();
 }, false );
@@ -137,9 +137,10 @@ function clearCanvas() {
   data6_s1 = 0;
   data6_s2 = 0;
   document.getElementById("hasil").innerHTML = "" ;
-  document.getElementById('table').innerHTML = "";
-  document.getElementById('table2').innerHTML = "";
+ // var box = document.getElementById('box');
+ // box.style.display = (box.style.display != 'visible') ? 'none' : '';
 }
+
 
 var recording = false;
 var lastPositionX = 0;
