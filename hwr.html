@@ -75,6 +75,8 @@ table {
 	border-width: 1px;
 	border-color: #666666;
 	border-collapse: collapse;
+	float : left;
+	margin-left : 3px;
 }
 table th {
 	border-width: 1px;
@@ -98,16 +100,30 @@ table td {
  var data1_s2 = 0;
  var data2_s1 = 0;
  var data2_s2 = 0;
- var data3_s1 = 0;
- var data3_s2 = 0;
- var data4_s1 = 0;
- var data4_s2 = 0;
  var data5_s1 = 0;
  var data5_s2 = 0;
  var data6_s1 = 0;
  var data6_s2 = 0;
  
- function clearCanvas() {
+var ctx, color = "#000";	
+document.addEventListener( "DOMContentLoaded", function(){
+    newCanvas();
+}, false );
+
+
+
+function newCanvas(){
+    var canvas = '<canvas id="canvas1"  width="' + ($(window).width()) + '" height="' + ($(window).height() - 200) + '" style="border:0px solid #190c00; max-width: 100%;height: auto;background:url(whiteboard.png);background-position: center top; background-size: 100% 100%;background-repeat: no-repeat;" ></canvas>';
+	document.getElementById("canvas").innerHTML = canvas;
+	ctx=document.getElementById("canvas1").getContext("2d");
+	ctx.strokeStyle = color;
+	ctx.lineWidth = 5;	
+    drawTouch();
+
+}
+
+
+function clearCanvas() {
 	context = $("#canvas1")[0].getContext('2d');
 	context.clearRect(0, 0, $("#canvas1")[0].width, $("#canvas1")[0].height);
 	moves = [];
@@ -116,33 +132,22 @@ table td {
   data1_s2 = 0;
   data2_s1 = 0;
   data2_s2 = 0;
-  data3_s1 = 0;
-  data3_s2 = 0;
-  data4_s1 = 0;
-  data4_s2 = 0;
   data5_s1 = 0;
   data5_s2 = 0;
   data6_s1 = 0;
   data6_s2 = 0;
   document.getElementById("hasil").innerHTML = "" ;
   document.getElementById('table').innerHTML = "";
- // var box = document.getElementById('box');
- // box.style.display = (box.style.display != 'visible') ? 'none' : '';
+  document.getElementById('table2').innerHTML = "";
 }
-
-
-$(document).ready(function() {
-	newCanvas();
-});
-
 
 var recording = false;
 var lastPositionX = 0;
 var lastPositionY = 0;
 var moves = new Array;
 var angleArray = new Array;
-var sectorRad = Math.PI * 2 / 8;
 var anglesMap = new Array;
+var sectorRad = Math.PI * 2 / 8;
 var step = Math.PI * 2 / 100;
 var sector;
 for (var i = -sectorRad / 2; i <= Math.PI * 2 - sectorRad / 2; i += step) {
@@ -151,46 +156,30 @@ for (var i = -sectorRad / 2; i <= Math.PI * 2 - sectorRad / 2; i += step) {
 }
 
 
+        
 
 
-function newCanvas() {
-	var canvas = '<canvas id="canvas1"  width="' + ($(window).width() - 20) + '"  height="' + ($(window).height() - 100) + '" style="border:0px solid #190c00; max-width: 100%;height: auto;background:url(whiteboard.png);background-position: center top; background-size: 100% 100%;background-repeat: no-repeat;" ></canvas>';
-	$("#canvas").html(canvas);
-	ctx = document.getElementById("canvas1").getContext("2d");
-	ctx.lineWidth = 4;
-	$("#canvas1").drawTouch();
-	$("#canvas1").drawMouse();
-}
-
-
-
-$.fn.drawTouch = function() {
+var drawTouch = function() {
+var clicked = 0;
 	var start = function(e) {
-		e = e.originalEvent;
+	    clicked = 1;
 		ctx.beginPath();
-		ctx.strokeStyle="#ff3299";
-		x = e.changedTouches[0].pageX - 9;
-		y = e.changedTouches[0].pageY - 9;
-		ctx.moveTo(x, y);
+		x = e.changedTouches[0].pageX - 1;
+		y = e.changedTouches[0].pageY - 2;
+		ctx.moveTo(x,y);
 		ctx.strokeRect(x, y, 1, 1);
 		lastPositionX = e.changedTouches[0].pageX - $("#canvas1").offset().left;
 		lastPositionY = e.changedTouches[0].pageY - $("#canvas1").offset().top;
-        recording = true;
-		
-	
-
+		recording = true;
 	};
-
 	var move = function(e) {
-
-		e = e.originalEvent;
-		x = e.changedTouches[0].pageX - 9;
-		y = e.changedTouches[0].pageY - 9;
-		ctx.lineTo(x, y);
+		if (clicked) {
+		e.preventDefault();
+		x = e.changedTouches[0].pageX - 1;
+		y = e.changedTouches[0].pageY- 2;
+		ctx.lineTo(x,y);
 		ctx.stroke();
-		
-
-
+		}
 		if (recording == true) {
 			var msx = (e.changedTouches[0].pageX - $("#canvas1").offset().left);
 			var msy = (e.changedTouches[0].pageY - $("#canvas1").offset().top);
@@ -203,136 +192,47 @@ $.fn.drawTouch = function() {
 				lastPositionX = msx;
 				lastPositionY = msy;
 				var angle = Math.atan2(difx, dify) + sectorRad / 2;
+				
 				var angleRound = Math.floor(angle * 100);
-				//f = value < 0 ? Math.abs(value) : value;
 				if (angle < 0) angle += Math.PI * 2;
 				var no = Math.floor(angle / (Math.PI * 2) * 100);
 				moves.push(anglesMap[no]);
 				angleArray.push(angleRound);
 				data1_s1 = _.first(_.uniq(angleArray)) ;
 				data2_s1 = _.last(_.uniq(angleArray)) ;
-				data3_s1 = _.first(_.uniq(moves)) ;
-				data4_s1 = _.last(_.uniq(moves)) ;
-				data5_s1 = _.uniq(angleArray).length ;
+				data5_s1 = angleArray.length ;
 				data6_s1 = _.uniq(moves).length ;
 
 			}
 		}
-	};
-
-	var stop = function(e) {
-		clicked = 0;
-		recording = false;
-		lastPositionX = 0;
-		lastPositionY = 0;
-		
-		data1_s2 += data1_s1 ;
-		data2_s2 += data2_s1 ;
-		data3_s2 += data3_s1 ;
-		data4_s2 += data4_s1 ;
-		data5_s2 += data5_s1 ;
-		data6_s2 += data6_s1 ;
-		
-	};
-
-	$(this).on("touchstart", start);
-	$(this).on("touchmove", move);
-	$(this).on("touchend", stop);
-};
-
-
-
-$.fn.drawMouse = function() {
-	var clicked = 0;
-	var start = function(e) {
-		e = e.originalEvent;
-		clicked = 1;
-		ctx.beginPath();
-		ctx.strokeStyle="#ff3299";
-		x = e.pageX - 9;
-		y = e.pageY - 9;
-		ctx.moveTo(x, y);
-		ctx.strokeRect(x, y, 1, 1);
-		lastPositionX = e.clientX - $("#canvas1").offset().left;
-		lastPositionY = e.clientY - $("#canvas1").offset().top;
-		recording = true;
-		
-	};
-
-	var move = function(e) {
-		e = e.originalEvent;
-
-		if (clicked) {
-			x = e.pageX - 9;
-		    y = e.pageY - 9;
-			ctx.lineTo(x, y);
-			ctx.stroke();
-		}
-		if (recording == true) {
-			var msx = (e.clientX - $("#canvas1").offset().left);
-			var msy = (e.clientY - $("#canvas1").offset().top);
-			var difx = msx - lastPositionX;
-			var dify = msy - lastPositionY;
-			var sqDist = (difx * difx + dify * dify);
-			var sqPrec = (8 * 8);
-
-
-			if (sqDist > sqPrec) {
-
-				lastPositionX = msx;
-				lastPositionY = msy;
-				var angle = Math.atan2(difx, dify) + sectorRad / 2;
-				var angleRound = Math.floor(angle * 100);
-				//f = value < 0 ? Math.abs(value) : value;
-				if (angle < 0) angle += Math.PI * 2;
-				var no = Math.floor(angle / (Math.PI * 2) * 100);
-				moves.push(anglesMap[no]);
-				angleArray.push(angleRound);
-				data1_s1 = _.first(_.uniq(angleArray)) ;
-				data2_s1 = _.last(_.uniq(angleArray)) ;
-				data3_s1 = _.first(_.uniq(moves)) ;
-				data4_s1 = _.last(_.uniq(moves)) ;
-				data5_s1 = _.uniq(angleArray).length ;
-				data6_s1 = _.uniq(moves).length ;
-
-			}
-		}
-
-
-
-	};
-
-	var stop = function(e) {
-		e = e.originalEvent;
-		clicked = 0;
-		recording = false;
-		lastPositionX = 0;
-		lastPositionY = 0;
-		
-		data1_s2 += data1_s1 ;
-		data2_s2 += data2_s1 ;
-		data3_s2 += data3_s1 ;
-		data4_s2 += data4_s1 ;
-		data5_s2 += data5_s1 ;
-		data6_s2 += data6_s1 ;
-		
-
 	
-		console.log(data1_s2 + " " + data2_s2);
-		
-		
-		
 	};
+	var stop = function(e) {
+		
+		recording = false;
+		lastPositionX = 0;
+		lastPositionY = 0;
+		data1_s2 += data1_s1 ;
+		data2_s2 += data2_s1 ;
+		data5_s2 += data6_s1 ;
+		data6_s2 += data6_s1 ;
+	
+	};
+    document.getElementById("canvas1").addEventListener("touchstart", start, false);
+	document.getElementById("canvas1").addEventListener("touchmove", move, false);
+	document.getElementById("canvas1").addEventListener("touchend", stop, false);
+	
+}; 
 
-	$(this).on("mousedown", start);
-	$(this).on("mousemove", move);
-	$(this).on("mouseup", stop);
-};
+ 
+ 
 
 function getFuzzySet() {
 
-	var hasil = []; //array hasil
+	var hasil = []; //array hasil last angle
+	var hasil_2 = [];
 	var ob = []; //sort array
+	var ob_2 = [];
 
 	
 	var newArrayA = [];
@@ -361,13 +261,40 @@ function getFuzzySet() {
 	var newArrayX = [];
 	var newArrayY = [];
 	var newArrayZ = [];
-
+    
+	var newArrayA_2 = [];
+	var newArrayB_2 = [];
+	var newArrayC_2 = [];
+	var newArrayD_2 = [];
+	var newArrayE_2 = [];
+	var newArrayF_2 = [];
+	var newArrayG_2 = [];
+	var newArrayH_2 = [];
+	var newArrayI_2 = [];
+	var newArrayJ_2 = [];
+	var newArrayK_2 = [];
+	var newArrayL_2 = [];
+	var newArrayM_2 = [];
+	var newArrayN_2 = [];
+	var newArrayO_2 = [];
+	var newArrayP_2 = [];
+	var newArrayQ_2 = [];
+	var newArrayR_2 = [];
+	var newArrayS_2 = [];
+	var newArrayT_2 = [];
+	var newArrayU_2 = [];
+	var newArrayV_2 = [];
+	var newArrayW_2 = [];
+	var newArrayX_2 = [];
+	var newArrayY_2 = [];
+	var newArrayZ_2 = [];
  
 	var x = Math.abs(data2_s2) ;
+	var y = Math.abs(data1_s2) ;
   
 	for (i = 0; i < data.length; i++) {
 
-		ob.push(data[i].last_last_angle);
+		ob.push(data[i].last_angle);
 		ob.join();
 		ob.sort(function(a, b) {
 			return a - b
@@ -1411,25 +1338,1080 @@ function getFuzzySet() {
 			}
 		}
 
+		
+	};
+	
+	
+	/////////////////////line
+	
+	
+	for (i = 0; i < data.length; i++) {
+
+	
+		ob_2.push(data[i].first_angle);
+		ob_2.join();
+		ob_2.sort(function(a, b) {
+			return a - b
+		});
+		console.log(ob_2)
+
+		
+		//batas
+		if (data[i].type == "A") {
+			newArrayA_2.push(data[i].first_angle);
+			newArrayA_2.join();
+			newArrayA_2.sort(function(a, b) {
+			return a - b
+		     });
+
+			var a = newArrayA_2[0];
+			var b = newArrayA_2[1];
+			var c = newArrayA_2[2];
+			var d = newArrayA_2[3];
+
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+				hasil_2.push({
+					type: 'A',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+				hasil_2.push({
+					type: 'A',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'A',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+
+		if (data[i].type == "B") {
+			newArrayB_2.push(data[i].first_angle);
+			newArrayB_2.join();
+			newArrayB_2.sort(function(a, b) {
+			return a - b
+		     });
+
+			var a = newArrayB_2[0];
+			var b = newArrayB_2[1];
+			var c = newArrayB_2[2];
+			var d = newArrayB_2[3];
+
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+				hasil_2.push({
+					type: 'B',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+				hasil_2.push({
+					type: 'B',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'B',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+
+		if (data[i].type == "C") {
+			newArrayC_2.push(data[i].first_angle);
+			newArrayC_2.join();
+			newArrayC_2.sort(function(a, b) {
+			return a - b
+		     });
+
+			var a = newArrayC_2[0];
+			var b = newArrayC_2[1];
+			var c = newArrayC_2[2];
+			var d = newArrayC_2[3];
+
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+				hasil_2.push({
+					type: 'C',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+				hasil_2.push({
+					type: 'C',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'C',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+		if (data[i].type == "D") {
+			newArrayD_2.push(data[i].first_angle);
+			newArrayD_2.join();
+			newArrayD_2.sort(function(a, b) {
+			return a - b
+		     });
+
+			var a = newArrayD_2[0];
+			var b = newArrayD_2[1];
+			var c = newArrayD_2[2];
+			var d = newArrayD_2[3];
+
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+				hasil_2.push({
+					type: 'D',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+				hasil_2.push({
+					type: 'D',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'D',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+
+		if (data[i].type == "E") {
+			newArrayE_2.push(data[i].first_angle);
+			newArrayE_2.join();
+			newArrayE_2.sort(function(a, b) {
+			return a - b
+		     });
+
+			var a = newArrayE_2[0];
+			var b = newArrayE_2[1];
+			var c = newArrayE_2[2];
+			var d = newArrayE_2[3];
+
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+				hasil_2.push({
+					type: 'E',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+				hasil_2.push({
+					type: 'E',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'E',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+
+		if (data[i].type == "F") {
+			newArrayF_2.push(data[i].first_angle);
+			newArrayF_2.join();
+			newArrayF_2.sort(function(a, b) {
+			return a - b
+		     });
+
+			var a = newArrayF_2[0];
+			var b = newArrayF_2[1];
+			var c = newArrayF_2[2];
+			var d = newArrayF_2[3];
+
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+				hasil_2.push({
+					type: 'F',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+				hasil_2.push({
+					type: 'F',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'F',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+		if (data[i].type == "G") {
+			newArrayG_2.push(data[i].first_angle);
+			newArrayG_2.join();
+			newArrayG_2.sort(function(a, b) {
+			return a - b
+		     });
+
+			var a = newArrayG_2[0];
+			var b = newArrayG_2[1];
+			var c = newArrayG_2[2];
+			var d = newArrayG_2[3];
+
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+				hasil_2.push({
+					type: 'G',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+				hasil_2.push({
+					type: 'G',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'G',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+
+		if (data[i].type == "H") {
+			newArrayH_2.push(data[i].first_angle);
+			newArrayH_2.join();
+			newArrayH_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayH_2[0];
+			var b = newArrayH_2[1];
+			var c = newArrayH_2[2];
+			var d = newArrayH_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'H',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'H',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'H',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+
+		if (data[i].type == "I") {
+			newArrayI_2.push(data[i].first_angle);
+			newArrayI_2.join();
+			newArrayI_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayI_2[0];
+			var b = newArrayI_2[1];
+			var c = newArrayI_2[2];
+			var d = newArrayI_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'I',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'I',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'I',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+
+
+		if (data[i].type == "J") {
+			newArrayJ_2.push(data[i].first_angle);
+			newArrayJ_2.join();
+			newArrayJ_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayJ_2[0];
+			var b = newArrayJ_2[1];
+			var c = newArrayJ_2[2];
+			var d = newArrayJ_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'J',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'J',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'J',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas 
+
+		if (data[i].type == "K") {
+			newArrayK_2.push(data[i].first_angle);
+			newArrayK_2.join();
+			newArrayK_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayK_2[0];
+			var b = newArrayK_2[1];
+			var c = newArrayK_2[2];
+			var d = newArrayK_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'K',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'K',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'K',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//batas
+
+		if (data[i].type == "L") {
+			newArrayL_2.push(data[i].first_angle);
+			newArrayL_2.join();
+			newArrayL_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayL_2[0];
+			var b = newArrayL_2[1];
+			var c = newArrayL_2[2];
+			var d = newArrayL_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'L',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'L',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'L',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//Batas
+
+		if (data[i].type == "M") {
+			newArrayM_2.push(data[i].first_angle);
+			newArrayM_2.join();
+			newArrayM_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayM_2[0];
+			var b = newArrayM_2[1];
+			var c = newArrayM_2[2];
+			var d = newArrayM_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'M',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'M',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'M',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//Batas
+
+		if (data[i].type == "N") {
+			newArrayN_2.push(data[i].first_angle);
+			newArrayN_2.join();
+			newArrayN_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayN_2[0];
+			var b = newArrayN_2[1];
+			var c = newArrayN_2[2];
+			var d = newArrayN_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'N',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'N',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'N',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//Batas
+
+		if (data[i].type == "0") {
+			newArrayO_2.push(data[i].first_angle);
+			newArrayO_2.join();
+			newArrayO_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayO_2[0];
+			var b = newArrayO_2[1];
+			var c = newArrayO_2[2];
+			var d = newArrayO_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'O',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'O',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'O',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//Batas
+
+		if (data[i].type == "P") {
+			newArrayP_2.push(data[i].first_angle);
+			newArrayP_2.join();
+			newArrayP_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayP_2[0];
+			var b = newArrayP_2[1];
+			var c = newArrayP_2[2];
+			var d = newArrayP_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'P',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'P',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'P',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//Batas
+
+		if (data[i].type == "Q") {
+			newArrayQ_2.push(data[i].first_angle);
+			newArrayQ_2.join();
+			newArrayQ_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayQ_2[0];
+			var b = newArrayQ_2[1];
+			var c = newArrayQ_2[2];
+			var d = newArrayQ_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'Q',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'Q',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'Q',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//Batas
+
+		if (data[i].type == "R") {
+			newArrayR_2.push(data[i].first_angle);
+			newArrayR_2.join();
+			newArrayR_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayR_2[0];
+			var b = newArrayR_2[1];
+			var c = newArrayR_2[2];
+			var d = newArrayR_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'R',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'R',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'R',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+		//Batas
+
+		if (data[i].type == "S") {
+			newArrayS_2.push(data[i].first_angle);
+			newArrayS_2.join();
+			newArrayS_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayS_2[0];
+			var b = newArrayS_2[1];
+			var c = newArrayS_2[2];
+			var d = newArrayS_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'S',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'S',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'S',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//Batas
+
+		if (data[i].type == "T") {
+			newArrayT_2.push(data[i].first_angle);
+			newArrayT_2.join();
+			newArrayT_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayT_2[0];
+			var b = newArrayT_2[1];
+			var c = newArrayT_2[2];
+			var d = newArrayT_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'T',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'T',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'T',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+
+		//Batas
+
+		if (data[i].type == "U") {
+			newArrayU_2.push(data[i].first_angle);
+			newArrayU_2.join();
+			newArrayU_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayU_2[0];
+			var b = newArrayU_2[1];
+			var c = newArrayU_2[2];
+			var d = newArrayU_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'U',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'U',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'U',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
 		//BATAS
 
+		if (data[i].type == "V") {
+			newArrayV_2.push(data[i].first_angle);
+			newArrayV_2.join();
+			newArrayV_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayV_2[0];
+			var b = newArrayV_2[1];
+			var c = newArrayV_2[2];
+			var d = newArrayV_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
 
-		//console.log(hasil);
-		//   Trapezoid Formula
-       
-	  
-     
+				hasil_2.push({
+					type: 'V',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
 
+				hasil_2.push({
+					type: 'V',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'V',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//BATAS
+
+		if (data[i].type == "W") {
+			newArrayW_2.push(data[i].first_angle);
+			newArrayW_2.join();
+			newArrayW_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayW_2[0];
+			var b = newArrayW_2[1];
+			var c = newArrayW_2[2];
+			var d = newArrayW_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'W',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'W',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'W',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//BATAS
+
+		if (data[i].type == "y") {
+			newArrayY_2.push(data[i].first_angle);
+			newArrayY_2.join();
+			newArrayY_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayY_2[0];
+			var b = newArrayY_2[1];
+			var c = newArrayY_2[2];
+			var d = newArrayY_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'y',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'y',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'y',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		//BATAS
+
+		if (data[i].type == "Y") {
+			newArrayY_2.push(data[i].first_angle);
+			newArrayY_2.join();
+			newArrayY_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayY_2[0];
+			var b = newArrayY_2[1];
+			var c = newArrayY_2[2];
+			var d = newArrayY_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'Y',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'Y',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'Y',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		if (data[i].type == "Z") {
+			newArrayZ_2.push(data[i].first_angle);
+			newArrayZ_2.join();
+			newArrayZ_2.sort(function(a, b) {
+			return a - b
+		     });
+			var a = newArrayZ_2[0];
+			var b = newArrayZ_2[1];
+			var c = newArrayZ_2[2];
+			var d = newArrayZ_2[3];
+			if (y <= b) {
+				var value = (y - a) / (b - a); //(y-a) / (b-a)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'Z',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y > b && y < c) {
+				var f = 1
+
+				hasil_2.push({
+					type: 'Z',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+			if (y >= c && y <= d) {
+				var value = (d - y) / (d - c); //(d-y)/(d-c)
+				f = value < 0 ? 0 : value;
+
+				hasil_2.push({
+					type: 'Z',
+					derajat_keanggotaan: f.toFixed(3)
+				});
+			}
+		}
+
+		
 	};
 	
 	var table = document.getElementById('table') ;
-   table.innerHTML = "<table id='table_fuzzy' border='1'><tr><th>Type</th><th>Derajat Keanggotaan</th></tr></table>";
+    table.innerHTML = "<table width='5px' id='table_fuzzy' border='1'><tr><th>Type</th><th>Degree last_angle </th></tr></table>";
+	
+	var table2 = document.getElementById('table2') ;
+    table2.innerHTML = "<table width='5px'  id='table_fuzzy2' border='1'><tr><th>Type</th><th>Degree first_angle</th></tr></table>";
 	
 	for (i = 0; i < hasil.length; i++) {
-	     console.log(hasil[i].type + "   "  + hasil[i].derajat_keanggotaan);
+	
+	    // console.log(hasil[i].type + "   "  + hasil_2[i].derajat_keanggotaan);
 		 document.getElementById('table_fuzzy').innerHTML += "<tr><td>" + hasil[i].type  + "</td><td>" + hasil[i].derajat_keanggotaan + "</td></tr>";
 	  }
 	  
+	  for (i = 0; i < hasil_2.length; i++) {
+	   console.log(hasil_2[i].type);
+	    // console.log(hasil[i].type + "   "  + hasil_2[i].derajat_keanggotaan);
+		 document.getElementById('table_fuzzy2').innerHTML += "<tr><td>" + hasil_2[i].type  + "</td><td>" + hasil_2[i].derajat_keanggotaan + "</td></tr>";
+	  }
 	  
 
 }
@@ -1545,7 +2527,11 @@ function getFuzzySet() {
 	
 	 
       </div>
-	  
+	    <div id="table2">
+	
+	
+	 
+      </div>
 	
 		
 
