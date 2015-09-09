@@ -105,7 +105,7 @@ table td {
  var data6_s1 = 0;
  var data6_s2 = 0;
  
-var ctx, color = "#F43C60";	
+var ctx, color = "#000";	
 document.addEventListener( "DOMContentLoaded", function(){
     newCanvas();
 }, false );
@@ -128,6 +128,8 @@ function clearCanvas() {
 	context.clearRect(0, 0, $("#canvas1")[0].width, $("#canvas1")[0].height);
 	moves = [];
     angleArray = [];
+	scoreDegree = [];
+	 document.getElementById("hasil").innerHTML = "";
   data1_s1 = 0;
   data1_s2 = 0;
   data2_s1 = 0;
@@ -137,10 +139,9 @@ function clearCanvas() {
   data6_s1 = 0;
   data6_s2 = 0;
   document.getElementById("hasil").innerHTML = "" ;
- // var box = document.getElementById('box');
- // box.style.display = (box.style.display != 'visible') ? 'none' : '';
+  document.getElementById('table').innerHTML = "";
+  document.getElementById('table2').innerHTML = "";
 }
-
 
 var recording = false;
 var lastPositionX = 0;
@@ -217,6 +218,8 @@ var clicked = 0;
 		data2_s2 += data2_s1 ;
 		data5_s2 += data6_s1 ;
 		data6_s2 += data6_s1 ;
+		
+		console.log(data1_s2 + "_" + data2_s2 );
 	
 	};
     document.getElementById("canvas1").addEventListener("touchstart", start, false);
@@ -226,7 +229,7 @@ var clicked = 0;
 }; 
 
  
- 
+ var scoreDegree = [];
 
 function getFuzzySet() {
 
@@ -234,6 +237,7 @@ function getFuzzySet() {
 	var hasil_2 = [];
 	var ob = []; //sort array
 	var ob_2 = [];
+	
 
 	
 	var newArrayA = [];
@@ -289,219 +293,212 @@ function getFuzzySet() {
 	var newArrayX_2 = [];
 	var newArrayY_2 = [];
 	var newArrayZ_2 = [];
+	
+	
+	
+	var sumValueA = 0;
+	var sumValueB = 0;
+	var sumValueC = 0;
+	var sumValueD = 0;
+	var sumValueE = 0;
+	var sumValueF = 0;
+	var sumValueG = 0;
+	var sumValueH = 0;
+	var sumValueI = 0;
+	var sumValueJ = 0;
+	var sumValueK = 0;
+	var sumValueL = 0;
+	var sumValueM = 0;
+	var sumValueN = 0;
+	var sumValueO = 0;
+	var sumValueP = 0;
+	var sumValueQ = 0;
+	var sumValueR = 0;
+	var sumValueS = 0;
+	var sumValueT = 0;
+	var sumValueU = 0;
+	var sumValueV = 0;
+	var sumValueW = 0;
+	var sumValueX = 0;
+	var sumValueY = 0;
+	var sumValueZ = 0;
  
 	var x = Math.abs(data2_s2) ;
 	var y = Math.abs(data1_s2) ;
   
-	for (i = 0; i < data.length; i++) {
+	
 
-		ob.push(data[i].last_angle);
-		ob.join();
-		ob.sort(function(a, b) {
-			return a - b
-		});
-		
 
-		
-		//batas
+		for (i = 0; i < data.length; i++) {
 		if (data[i].type == "A") {
 			newArrayA.push(data[i].last_angle);
 			newArrayA.join();
 			newArrayA.sort(function(a, b) {
 			return a - b
 		     });
+        }
+		}
 
 			var a = newArrayA[0];
 			var b = newArrayA[1];
 			var c = newArrayA[2];
 			var d = newArrayA[3];
 
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				
+				if ( value > 0 && value <= 1) {hasil.push({type: 'A',derajat_keanggotaan: value});sumValueA += value}
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueA += value
 				hasil.push({
 					type: 'A',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-				hasil.push({
-					type: 'A',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
-
-				hasil.push({
-					type: 'A',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+				if ( value > 0 && value <= 1) {hasil.push({type: 'A',derajat_keanggotaan: value});sumValueA += value}
 			}
-		}
+			
+	
 
-		//batas
-
+	
+        for (i = 0; i < data.length; i++) {
 		if (data[i].type == "B") {
 			newArrayB.push(data[i].last_angle);
 			newArrayB.join();
 			newArrayB.sort(function(a, b) {
 			return a - b
 		     });
+		}
+		}
 
 			var a = newArrayB[0];
 			var b = newArrayB[1];
 			var c = newArrayB[2];
 			var d = newArrayB[3];
 
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) { //162,48,108
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+	
+				if ( value > 0 && value <= 1) {hasil.push({type: 'B',derajat_keanggotaan: value});sumValueB += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueB += value
 				hasil.push({
 					type: 'B',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-				hasil.push({
-					type: 'B',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'B',derajat_keanggotaan: value});sumValueB += value}
 
-				hasil.push({
-					type: 'B',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
+		
 
-		//batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "C") {
 			newArrayC.push(data[i].last_angle);
 			newArrayC.join();
 			newArrayC.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayC[0];
 			var b = newArrayC[1];
 			var c = newArrayC[2];
 			var d = newArrayC[3];
 
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'C',derajat_keanggotaan: value});sumValueC += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueC += value
 				hasil.push({
 					type: 'C',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-				hasil.push({
-					type: 'C',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'C',derajat_keanggotaan: value});sumValueC += value}
 
-				hasil.push({
-					type: 'C',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+				
 			}
-		}
 
-		//batas
+
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "D") {
 			newArrayD.push(data[i].last_angle);
 			newArrayD.join();
 			newArrayD.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayD[0];
 			var b = newArrayD[1];
 			var c = newArrayD[2];
 			var d = newArrayD[3];
 
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'D',derajat_keanggotaan: value});sumValueD += value}
+			
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueD += value
 				hasil.push({
 					type: 'D',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-				hasil.push({
-					type: 'D',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'D',derajat_keanggotaan: value});sumValueD += value}
 
-				hasil.push({
-					type: 'D',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+				
 			}
-		}
 
-		//batas
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "E") {
 			newArrayE.push(data[i].last_angle);
 			newArrayE.join();
 			newArrayE.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayE[0];
 			var b = newArrayE[1];
 			var c = newArrayE[2];
 			var d = newArrayE[3];
 
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'E',derajat_keanggotaan: value});sumValueE += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueE += value
 				hasil.push({
 					type: 'E',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-				hasil.push({
-					type: 'E',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'E',derajat_keanggotaan: value});sumValueE += value}
 
-				hasil.push({
-					type: 'E',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			
 			}
-		}
 
-		//batas
+
+for (i = 0; i < data.length; i++) {
 
 		if (data[i].type == "F") {
 			newArrayF.push(data[i].last_angle);
@@ -509,199 +506,150 @@ function getFuzzySet() {
 			newArrayF.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayF[0];
 			var b = newArrayF[1];
 			var c = newArrayF[2];
 			var d = newArrayF[3];
 
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'F',derajat_keanggotaan: value});sumValueF += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueF += value
 				hasil.push({
 					type: 'F',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-				hasil.push({
-					type: 'F',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'F',derajat_keanggotaan: value});sumValueF += value}
 
-				hasil.push({
-					type: 'F',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//batas
+
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "G") {
 			newArrayG.push(data[i].last_angle);
 			newArrayG.join();
 			newArrayG.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayG[0];
 			var b = newArrayG[1];
 			var c = newArrayG[2];
 			var d = newArrayG[3];
 
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'G',derajat_keanggotaan: value});sumValueG += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueG += value
 				hasil.push({
 					type: 'G',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-				hasil.push({
-					type: 'G',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'G',derajat_keanggotaan: value});sumValueG += value}
 
-				hasil.push({
-					type: 'G',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+ 
 			}
-		}
 
-		//batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "H") {
 			newArrayH.push(data[i].last_angle);
 			newArrayH.join();
 			newArrayH.sort(function(a, b) {
 			return a - b
 		     });
+}}
 			var a = newArrayH[0];
 			var b = newArrayH[1];
 			var c = newArrayH[2];
 			var d = newArrayH[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'H',derajat_keanggotaan: value});sumValueH += value}
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueH += value
 
 				hasil.push({
 					type: 'H',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'H',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'H',derajat_keanggotaan: value});sumValueH += value}
 
-				hasil.push({
-					type: 'H',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//batas
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "I") {
 			newArrayI.push(data[i].last_angle);
 			newArrayI.join();
 			newArrayI.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayI[0];
 			var b = newArrayI[1];
 			var c = newArrayI[2];
 			var d = newArrayI[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
-
-				hasil.push({
-					type: 'I',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+				if ( value > 0 && value <= 1) {hasil.push({type: 'I',derajat_keanggotaan: value});sumValueI += value}
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'I',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			if (b <= x && x <= c) {
+				var value = 1;sumValueI += value
 			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'I',derajat_keanggotaan: value});sumValueI += value}
 
-				hasil.push({
-					type: 'I',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
-
-		//batas
 
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "J") {
 			newArrayJ.push(data[i].last_angle);
 			newArrayJ.join();
 			newArrayJ.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayJ[0];
 			var b = newArrayJ[1];
 			var c = newArrayJ[2];
 			var d = newArrayJ[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'J',derajat_keanggotaan: value});sumValueJ += value}
 
-				hasil.push({
-					type: 'J',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+				
 			}
-			if (x > b && x < c) {
-				var f = 1
+			if (b <= x && x <= c) {
+				var value = 1;sumValueJ += value
 
-				hasil.push({
-					type: 'J',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'J',derajat_keanggotaan: value});sumValueJ += value}
 
-				hasil.push({
-					type: 'J',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//batas 
+
+for (i = 0; i < data.length; i++) {
 
 		if (data[i].type == "K") {
 			newArrayK.push(data[i].last_angle);
@@ -709,853 +657,692 @@ function getFuzzySet() {
 			newArrayK.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayK[0];
 			var b = newArrayK[1];
 			var c = newArrayK[2];
 			var d = newArrayK[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'K',derajat_keanggotaan: value});sumValueK += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueK += value
 
 				hasil.push({
 					type: 'K',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'K',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'K',derajat_keanggotaan: value});sumValueK += value}
 
-				hasil.push({
-					type: 'K',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//batas
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "L") {
 			newArrayL.push(data[i].last_angle);
 			newArrayL.join();
 			newArrayL.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayL[0];
 			var b = newArrayL[1];
 			var c = newArrayL[2];
 			var d = newArrayL[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'L',derajat_keanggotaan: value});sumValueL += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueL += value
 
 				hasil.push({
 					type: 'L',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'L',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'L',derajat_keanggotaan: value});sumValueL += value}
 
-				hasil.push({
-					type: 'L',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+
 			}
-		}
 
-		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "M") {
 			newArrayM.push(data[i].last_angle);
 			newArrayM.join();
 			newArrayM.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayM[0];
 			var b = newArrayM[1];
 			var c = newArrayM[2];
 			var d = newArrayM[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'M',derajat_keanggotaan: value});sumValueM += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueM += value
 
 				hasil.push({
 					type: 'M',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'M',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'M',derajat_keanggotaan: value});sumValueM += value}
 
-				hasil.push({
-					type: 'M',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
+
 
 		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "N") {
 			newArrayN.push(data[i].last_angle);
 			newArrayN.join();
 			newArrayN.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayN[0];
 			var b = newArrayN[1];
 			var c = newArrayN[2];
 			var d = newArrayN[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'N',derajat_keanggotaan: value});sumValueN += value}
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueN += value
 
 				hasil.push({
 					type: 'N',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'N',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'N',derajat_keanggotaan: value});sumValueN += value}
 
-				hasil.push({
-					type: 'N',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//Batas
 
-		if (data[i].type == "0") {
+for (i = 0; i < data.length; i++) {
+		if (data[i].type == "O") {
 			newArrayO.push(data[i].last_angle);
 			newArrayO.join();
 			newArrayO.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayO[0];
 			var b = newArrayO[1];
 			var c = newArrayO[2];
 			var d = newArrayO[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'O',derajat_keanggotaan: value});sumValueO += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueO += value
 
 				hasil.push({
 					type: 'O',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'O',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'O',derajat_keanggotaan: value});sumValueO += value}
 
-				hasil.push({
-					type: 'O',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+	
 			}
-		}
 
-		//Batas
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "P") {
 			newArrayP.push(data[i].last_angle);
 			newArrayP.join();
 			newArrayP.sort(function(a, b) {
 			return a - b
 		     });
+			}}
 			var a = newArrayP[0];
 			var b = newArrayP[1];
 			var c = newArrayP[2];
 			var d = newArrayP[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'P',derajat_keanggotaan: value});sumValueP += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueP += value
 
 				hasil.push({
 					type: 'P',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'P',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'P',derajat_keanggotaan: value});sumValueP += value}
 
-				hasil.push({
-					type: 'P',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//Batas
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "Q") {
 			newArrayQ.push(data[i].last_angle);
 			newArrayQ.join();
 			newArrayQ.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayQ[0];
 			var b = newArrayQ[1];
 			var c = newArrayQ[2];
 			var d = newArrayQ[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'Q',derajat_keanggotaan: value});sumValueQ += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueQ += value
 
 				hasil.push({
 					type: 'Q',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'Q',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'Q',derajat_keanggotaan: value});sumValueQ += value}
 
-				hasil.push({
-					type: 'Q',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//Batas
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "R") {
 			newArrayR.push(data[i].last_angle);
 			newArrayR.join();
 			newArrayR.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayR[0];
 			var b = newArrayR[1];
 			var c = newArrayR[2];
 			var d = newArrayR[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'R',derajat_keanggotaan: value});sumValueR += value}
+
+			
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueR += value
 
 				hasil.push({
 					type: 'R',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'R',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'R',derajat_keanggotaan: value});sumValueR += value}
 
-				hasil.push({
-					type: 'R',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
-		//Batas
 
+		//Batas
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "S") {
 			newArrayS.push(data[i].last_angle);
 			newArrayS.join();
 			newArrayS.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayS[0];
 			var b = newArrayS[1];
 			var c = newArrayS[2];
 			var d = newArrayS[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'S',derajat_keanggotaan: value});sumValueS += value}
+
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueS += value
 
 				hasil.push({
 					type: 'S',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'S',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'S',derajat_keanggotaan: value});sumValueS += value}
 
-				hasil.push({
-					type: 'S',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "T") {
 			newArrayT.push(data[i].last_angle);
 			newArrayT.join();
 			newArrayT.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayT[0];
 			var b = newArrayT[1];
 			var c = newArrayT[2];
 			var d = newArrayT[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'T',derajat_keanggotaan: value});sumValueT += value}
+
+			
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueT += value
 
 				hasil.push({
 					type: 'T',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'T',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'T',derajat_keanggotaan: value});sumValueT += value}
 
-				hasil.push({
-					type: 'T',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
 
-		//Batas
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "U") {
 			newArrayU.push(data[i].last_angle);
 			newArrayU.join();
 			newArrayU.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayU[0];
 			var b = newArrayU[1];
 			var c = newArrayU[2];
 			var d = newArrayU[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'U',derajat_keanggotaan: value});sumValueU += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueU += value
 
 				hasil.push({
 					type: 'U',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'U',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'U',derajat_keanggotaan: value});sumValueU += value}
 
-				hasil.push({
-					type: 'U',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//BATAS
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "V") {
 			newArrayV.push(data[i].last_angle);
 			newArrayV.join();
 			newArrayV.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayV[0];
 			var b = newArrayV[1];
 			var c = newArrayV[2];
 			var d = newArrayV[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'V',derajat_keanggotaan: value});sumValueV += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueV += value
 
 				hasil.push({
 					type: 'V',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'V',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'V',derajat_keanggotaan: value});sumValueV += value}
 
-				hasil.push({
-					type: 'V',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//BATAS
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "W") {
 			newArrayW.push(data[i].last_angle);
 			newArrayW.join();
 			newArrayW.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayW[0];
 			var b = newArrayW[1];
 			var c = newArrayW[2];
 			var d = newArrayW[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'W',derajat_keanggotaan: value});sumValueW += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueW += value
 
 				hasil.push({
 					type: 'W',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'W',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'W',derajat_keanggotaan: value});sumValueW += value}
 
-				hasil.push({
-					type: 'W',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//BATAS
-
+	for (i = 0; i < data.length; i++) {
 		if (data[i].type == "X") {
 			newArrayX.push(data[i].last_angle);
 			newArrayX.join();
 			newArrayX.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayX[0];
 			var b = newArrayX[1];
 			var c = newArrayX[2];
 			var d = newArrayX[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'X',derajat_keanggotaan: value});sumValueX += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueX += value
 
 				hasil.push({
 					type: 'X',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'X',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'X',derajat_keanggotaan: value});sumValueX += value}
 
-				hasil.push({
-					type: 'X',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
-
-		//BATAS
-
+			
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "Y") {
 			newArrayY.push(data[i].last_angle);
 			newArrayY.join();
 			newArrayY.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayY[0];
 			var b = newArrayY[1];
 			var c = newArrayY[2];
 			var d = newArrayY[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'Y',derajat_keanggotaan: value});sumValueY += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueY += value
 
 				hasil.push({
 					type: 'Y',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'Y',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'Y',derajat_keanggotaan: value});sumValueY += value}
 
-				hasil.push({
-					type: 'Y',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
+			}			
+			
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "Z") {
 			newArrayZ.push(data[i].last_angle);
 			newArrayZ.join();
 			newArrayZ.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayZ[0];
 			var b = newArrayZ[1];
 			var c = newArrayZ[2];
 			var d = newArrayZ[3];
-			if (x <= b) {
+			if (x <= a || a <= x || x <= b) {
 				var value = (x - a) / (b - a); //(x-a) / (b-a)
-				f = value < 0 ? 0 : value;
+				if ( value > 0 && value <= 1) {hasil.push({type: 'Z',derajat_keanggotaan: value});sumValueZ += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueZ += value
 
 				hasil.push({
 					type: 'Z',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (x > b && x < c) {
-				var f = 1
-
-				hasil.push({
-					type: 'Z',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (x >= c && x <= d) {
+			if (c <= x || x <= d || d <= x) {
 				var value = (d - x) / (d - c); //(d-x)/(d-c)
-				f = value < 0 ? 0 : value;
-
-				hasil.push({
-					type: 'Z',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+				if ( value > 0 && value <= 1) {hasil.push({type: 'Z',derajat_keanggotaan: value});sumValueZ += value}
 			}
-		}
 
-		
-	};
-	
-	
-	/////////////////////line
-	
-	
-	for (i = 0; i < data.length; i++) {
 
-	
-		ob_2.push(data[i].first_angle);
-		ob_2.join();
-		ob_2.sort(function(a, b) {
-			return a - b
-		});
-		console.log(ob_2)
 
-		
-		//batas
+
+
+		for (i = 0; i < data.length; i++) {
 		if (data[i].type == "A") {
 			newArrayA_2.push(data[i].first_angle);
 			newArrayA_2.join();
 			newArrayA_2.sort(function(a, b) {
 			return a - b
 		     });
+        }
+		}
 
 			var a = newArrayA_2[0];
 			var b = newArrayA_2[1];
 			var c = newArrayA_2[2];
 			var d = newArrayA_2[3];
 
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'A',derajat_keanggotaan: value});sumValueA += value}
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueA += value
 				hasil_2.push({
 					type: 'A',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
-				hasil_2.push({
-					type: 'A',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'A',derajat_keanggotaan: value});sumValueA += value}
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
+			
+	
 
-				hasil_2.push({
-					type: 'A',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		//batas
-
+	
+        for (i = 0; i < data.length; i++) {
 		if (data[i].type == "B") {
 			newArrayB_2.push(data[i].first_angle);
 			newArrayB_2.join();
 			newArrayB_2.sort(function(a, b) {
 			return a - b
 		     });
+		}
+		}
 
 			var a = newArrayB_2[0];
 			var b = newArrayB_2[1];
 			var c = newArrayB_2[2];
 			var d = newArrayB_2[3];
 
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) { //162,48,108
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+	
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'B',derajat_keanggotaan: value});sumValueB += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueB += value
 				hasil_2.push({
 					type: 'B',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
-				hasil_2.push({
-					type: 'B',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'B',derajat_keanggotaan: value});sumValueB += value}
+
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
+		
 
-				hasil_2.push({
-					type: 'B',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		//batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "C") {
 			newArrayC_2.push(data[i].first_angle);
 			newArrayC_2.join();
 			newArrayC_2.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayC_2[0];
 			var b = newArrayC_2[1];
 			var c = newArrayC_2[2];
 			var d = newArrayC_2[3];
 
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'C',derajat_keanggotaan: value});sumValueC += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueC += value
 				hasil_2.push({
 					type: 'C',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
-				hasil_2.push({
-					type: 'C',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'C',derajat_keanggotaan: value});sumValueC += value}
 
-				hasil_2.push({
-					type: 'C',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+				
 			}
-		}
 
-		//batas
+
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "D") {
 			newArrayD_2.push(data[i].first_angle);
 			newArrayD_2.join();
 			newArrayD_2.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayD_2[0];
 			var b = newArrayD_2[1];
 			var c = newArrayD_2[2];
 			var d = newArrayD_2[3];
 
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'D',derajat_keanggotaan: value});sumValueD += value}
+			
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueD += value
 				hasil_2.push({
 					type: 'D',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
-				hasil_2.push({
-					type: 'D',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'D',derajat_keanggotaan: value});sumValueD += value}
+
+				
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'D',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
-		//batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "E") {
 			newArrayE_2.push(data[i].first_angle);
 			newArrayE_2.join();
 			newArrayE_2.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayE_2[0];
 			var b = newArrayE_2[1];
 			var c = newArrayE_2[2];
 			var d = newArrayE_2[3];
 
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'E',derajat_keanggotaan: value});sumValueE += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueE += value
 				hasil_2.push({
 					type: 'E',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
-				hasil_2.push({
-					type: 'E',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'E',derajat_keanggotaan: value});sumValueE += value}
 
-				hasil_2.push({
-					type: 'E',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			
 			}
-		}
 
-		//batas
+
+for (i = 0; i < data.length; i++) {
 
 		if (data[i].type == "F") {
 			newArrayF_2.push(data[i].first_angle);
@@ -1563,199 +1350,150 @@ function getFuzzySet() {
 			newArrayF_2.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayF_2[0];
 			var b = newArrayF_2[1];
 			var c = newArrayF_2[2];
 			var d = newArrayF_2[3];
 
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'F',derajat_keanggotaan: value});sumValueF += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueF += value
 				hasil_2.push({
 					type: 'F',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
-				hasil_2.push({
-					type: 'F',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'F',derajat_keanggotaan: value});sumValueF += value}
 
-				hasil_2.push({
-					type: 'F',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//batas
+
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "G") {
 			newArrayG_2.push(data[i].first_angle);
 			newArrayG_2.join();
 			newArrayG_2.sort(function(a, b) {
 			return a - b
 		     });
-
+}}
 			var a = newArrayG_2[0];
 			var b = newArrayG_2[1];
 			var c = newArrayG_2[2];
 			var d = newArrayG_2[3];
 
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'G',derajat_keanggotaan: value});sumValueG += value}
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueG += value
 				hasil_2.push({
 					type: 'G',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
-				hasil_2.push({
-					type: 'G',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'G',derajat_keanggotaan: value});sumValueG += value}
+
+ 
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'G',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		//batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "H") {
 			newArrayH_2.push(data[i].first_angle);
 			newArrayH_2.join();
 			newArrayH_2.sort(function(a, b) {
 			return a - b
 		     });
+}}
 			var a = newArrayH_2[0];
 			var b = newArrayH_2[1];
 			var c = newArrayH_2[2];
 			var d = newArrayH_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'H',derajat_keanggotaan: value});sumValueH += value}
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueH += value
 
 				hasil_2.push({
 					type: 'H',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'H',derajat_keanggotaan: value});sumValueH += value}
 
-				hasil_2.push({
-					type: 'H',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'H',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
-		//batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "I") {
 			newArrayI_2.push(data[i].first_angle);
 			newArrayI_2.join();
 			newArrayI_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayI_2[0];
 			var b = newArrayI_2[1];
 			var c = newArrayI_2[2];
 			var d = newArrayI_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
-
-				hasil_2.push({
-					type: 'I',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'I',derajat_keanggotaan: value});sumValueI += value}
 			}
-			if (y > b && y < c) {
-				var f = 1
-
-				hasil_2.push({
-					type: 'I',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+			if (b <= x && x <= c) {
+				var value = 1;sumValueI += value
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'I',derajat_keanggotaan: value});sumValueI += value}
 
-				hasil_2.push({
-					type: 'I',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
-
-		//batas
 
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "J") {
 			newArrayJ_2.push(data[i].first_angle);
 			newArrayJ_2.join();
 			newArrayJ_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayJ_2[0];
 			var b = newArrayJ_2[1];
 			var c = newArrayJ_2[2];
 			var d = newArrayJ_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'J',derajat_keanggotaan: value});sumValueJ += value}
 
-				hasil_2.push({
-					type: 'J',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+				
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (b <= x && x <= c) {
+				var value = 1;sumValueJ += value
 
-				hasil_2.push({
-					type: 'J',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'J',derajat_keanggotaan: value});sumValueJ += value}
 
-				hasil_2.push({
-					type: 'J',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-		}
 
-		//batas 
+
+for (i = 0; i < data.length; i++) {
 
 		if (data[i].type == "K") {
 			newArrayK_2.push(data[i].first_angle);
@@ -1763,639 +1501,520 @@ function getFuzzySet() {
 			newArrayK_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayK_2[0];
 			var b = newArrayK_2[1];
 			var c = newArrayK_2[2];
 			var d = newArrayK_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'K',derajat_keanggotaan: value});sumValueK += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueK += value
 
 				hasil_2.push({
 					type: 'K',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'K',derajat_keanggotaan: value});sumValueK += value}
 
-				hasil_2.push({
-					type: 'K',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'K',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
-		//batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "L") {
 			newArrayL_2.push(data[i].first_angle);
 			newArrayL_2.join();
 			newArrayL_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayL_2[0];
 			var b = newArrayL_2[1];
 			var c = newArrayL_2[2];
 			var d = newArrayL_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'L',derajat_keanggotaan: value});sumValueL += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueL += value
 
 				hasil_2.push({
 					type: 'L',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'L',derajat_keanggotaan: value});sumValueL += value}
 
-				hasil_2.push({
-					type: 'L',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'L',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "M") {
 			newArrayM_2.push(data[i].first_angle);
 			newArrayM_2.join();
 			newArrayM_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayM_2[0];
 			var b = newArrayM_2[1];
 			var c = newArrayM_2[2];
 			var d = newArrayM_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'M',derajat_keanggotaan: value});sumValueM += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueM += value
 
 				hasil_2.push({
 					type: 'M',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'M',derajat_keanggotaan: value});sumValueM += value}
 
-				hasil_2.push({
-					type: 'M',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'M',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
 		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "N") {
 			newArrayN_2.push(data[i].first_angle);
 			newArrayN_2.join();
 			newArrayN_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayN_2[0];
 			var b = newArrayN_2[1];
 			var c = newArrayN_2[2];
 			var d = newArrayN_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'N',derajat_keanggotaan: value});sumValueN += value}
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueN += value
 
 				hasil_2.push({
 					type: 'N',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'N',derajat_keanggotaan: value});sumValueN += value}
 
-				hasil_2.push({
-					type: 'N',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'N',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
-		//Batas
-
-		if (data[i].type == "0") {
+for (i = 0; i < data.length; i++) {
+		if (data[i].type == "O") {
 			newArrayO_2.push(data[i].first_angle);
 			newArrayO_2.join();
 			newArrayO_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayO_2[0];
 			var b = newArrayO_2[1];
 			var c = newArrayO_2[2];
 			var d = newArrayO_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'O',derajat_keanggotaan: value});sumValueO += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueO += value
 
 				hasil_2.push({
 					type: 'O',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'O',derajat_keanggotaan: value});sumValueO += value}
 
-				hasil_2.push({
-					type: 'O',
-					derajat_keanggotaan: f.toFixed(3)
-				});
+	
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'O',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
-		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "P") {
 			newArrayP_2.push(data[i].first_angle);
 			newArrayP_2.join();
 			newArrayP_2.sort(function(a, b) {
 			return a - b
 		     });
+			}}
 			var a = newArrayP_2[0];
 			var b = newArrayP_2[1];
 			var c = newArrayP_2[2];
 			var d = newArrayP_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'P',derajat_keanggotaan: value});sumValueP += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueP += value
 
 				hasil_2.push({
 					type: 'P',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'P',derajat_keanggotaan: value});sumValueP += value}
 
-				hasil_2.push({
-					type: 'P',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'P',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
-		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "Q") {
 			newArrayQ_2.push(data[i].first_angle);
 			newArrayQ_2.join();
 			newArrayQ_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayQ_2[0];
 			var b = newArrayQ_2[1];
 			var c = newArrayQ_2[2];
 			var d = newArrayQ_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'Q',derajat_keanggotaan: value});sumValueQ += value}
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueQ += value
 
 				hasil_2.push({
 					type: 'Q',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'Q',derajat_keanggotaan: value});sumValueQ += value}
 
-				hasil_2.push({
-					type: 'Q',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'Q',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
-		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "R") {
 			newArrayR_2.push(data[i].first_angle);
 			newArrayR_2.join();
 			newArrayR_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayR_2[0];
 			var b = newArrayR_2[1];
 			var c = newArrayR_2[2];
 			var d = newArrayR_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'R',derajat_keanggotaan: value});sumValueR += value}
+
+			
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueR += value
 
 				hasil_2.push({
 					type: 'R',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'R',derajat_keanggotaan: value});sumValueR += value}
 
-				hasil_2.push({
-					type: 'R',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'R',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "S") {
 			newArrayS_2.push(data[i].first_angle);
 			newArrayS_2.join();
 			newArrayS_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayS_2[0];
 			var b = newArrayS_2[1];
 			var c = newArrayS_2[2];
 			var d = newArrayS_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'S',derajat_keanggotaan: value});sumValueS += value}
+
+				
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueS += value
 
 				hasil_2.push({
 					type: 'S',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'S',derajat_keanggotaan: value});sumValueS += value}
 
-				hasil_2.push({
-					type: 'S',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'S',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		//Batas
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "T") {
 			newArrayT_2.push(data[i].first_angle);
 			newArrayT_2.join();
 			newArrayT_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayT_2[0];
 			var b = newArrayT_2[1];
 			var c = newArrayT_2[2];
 			var d = newArrayT_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'T',derajat_keanggotaan: value});sumValueT += value}
+
+			
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueT += value
 
 				hasil_2.push({
 					type: 'T',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'T',derajat_keanggotaan: value});sumValueT += value}
 
-				hasil_2.push({
-					type: 'T',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
-
-				hasil_2.push({
-					type: 'T',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
 
-		//Batas
 
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "U") {
 			newArrayU_2.push(data[i].first_angle);
 			newArrayU_2.join();
 			newArrayU_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayU_2[0];
 			var b = newArrayU_2[1];
 			var c = newArrayU_2[2];
 			var d = newArrayU_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'U',derajat_keanggotaan: value});sumValueU += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueU += value
 
 				hasil_2.push({
 					type: 'U',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'U',derajat_keanggotaan: value});sumValueU += value}
 
-				hasil_2.push({
-					type: 'U',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'U',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
 
-		//BATAS
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "V") {
 			newArrayV_2.push(data[i].first_angle);
 			newArrayV_2.join();
 			newArrayV_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayV_2[0];
 			var b = newArrayV_2[1];
 			var c = newArrayV_2[2];
 			var d = newArrayV_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'V',derajat_keanggotaan: value});sumValueV += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueV += value
 
 				hasil_2.push({
 					type: 'V',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'V',derajat_keanggotaan: value});sumValueV += value}
 
-				hasil_2.push({
-					type: 'V',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'V',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		//BATAS
-
+			for (i = 0; i < data.length; i++) {
 		if (data[i].type == "W") {
-			newArrayW_2.push(data[i].first_angle);
+			newArrayW_2.push(data[i].last_angle);
 			newArrayW_2.join();
 			newArrayW_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayW_2[0];
 			var b = newArrayW_2[1];
 			var c = newArrayW_2[2];
 			var d = newArrayW_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'W',derajat_keanggotaan: value});sumValueW += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueW += value
 
 				hasil_2.push({
 					type: 'W',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'W',derajat_keanggotaan: value});sumValueW += value}
 
-				hasil_2.push({
-					type: 'W',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'W',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		//BATAS
-
-		if (data[i].type == "y") {
-			newArrayY_2.push(data[i].first_angle);
-			newArrayY_2.join();
-			newArrayY_2.sort(function(a, b) {
+	for (i = 0; i < data.length; i++) {
+		if (data[i].type == "X") {
+			newArrayX_2.push(data[i].last_angle);
+			newArrayX_2.join();
+			newArrayX_2.sort(function(a, b) {
 			return a - b
 		     });
-			var a = newArrayY_2[0];
-			var b = newArrayY_2[1];
-			var c = newArrayY_2[2];
-			var d = newArrayY_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			 }}
+			var a = newArrayX_2[0];
+			var b = newArrayX_2[1];
+			var c = newArrayX_2[2];
+			var d = newArrayX_2[3];
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'X',derajat_keanggotaan: value});sumValueX += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueX += value
 
 				hasil_2.push({
-					type: 'y',
-					derajat_keanggotaan: f.toFixed(3)
+					type: 'X',
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'X',derajat_keanggotaan: value});sumValueX += value}
 
-				hasil_2.push({
-					type: 'y',
-					derajat_keanggotaan: f.toFixed(3)
-				});
 			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
-
-				hasil_2.push({
-					type: 'y',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		//BATAS
-
+			
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "Y") {
-			newArrayY_2.push(data[i].first_angle);
+			newArrayY_2.push(data[i].last_angle);
 			newArrayY_2.join();
 			newArrayY_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayY_2[0];
 			var b = newArrayY_2[1];
 			var c = newArrayY_2[2];
 			var d = newArrayY_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'Y',derajat_keanggotaan: value});sumValueY += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueY += value
 
 				hasil_2.push({
 					type: 'Y',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'Y',derajat_keanggotaan: value});sumValueY += value}
 
-				hasil_2.push({
-					type: 'Y',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
+			}			
+			
 
-				hasil_2.push({
-					type: 'Y',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
+for (i = 0; i < data.length; i++) {
 		if (data[i].type == "Z") {
-			newArrayZ_2.push(data[i].first_angle);
+			newArrayZ_2.push(data[i].last_angle);
 			newArrayZ_2.join();
 			newArrayZ_2.sort(function(a, b) {
 			return a - b
 		     });
+			 }}
 			var a = newArrayZ_2[0];
 			var b = newArrayZ_2[1];
 			var c = newArrayZ_2[2];
 			var d = newArrayZ_2[3];
-			if (y <= b) {
-				var value = (y - a) / (b - a); //(y-a) / (b-a)
-				f = value < 0 ? 0 : value;
+			if (x <= a || a <= x || x <= b) {
+				var value = (x - a) / (b - a); //(x-a) / (b-a)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'Z',derajat_keanggotaan: value});sumValueZ += value}
+
+
+			}
+			if (b <= x && x <= c) {
+				var value = 1;sumValueZ += value
 
 				hasil_2.push({
 					type: 'Z',
-					derajat_keanggotaan: f.toFixed(3)
+					derajat_keanggotaan: value
 				});
 			}
-			if (y > b && y < c) {
-				var f = 1
+			if (c <= x || x <= d || d <= x) {
+				var value = (d - x) / (d - c); //(d-x)/(d-c)
+				if ( value > 0 && value <= 1) {hasil_2.push({type: 'Z',derajat_keanggotaan: value});sumValueZ += value}
+			}			
 
-				hasil_2.push({
-					type: 'Z',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-			if (y >= c && y <= d) {
-				var value = (d - y) / (d - c); //(d-y)/(d-c)
-				f = value < 0 ? 0 : value;
 
-				hasil_2.push({
-					type: 'Z',
-					derajat_keanggotaan: f.toFixed(3)
-				});
-			}
-		}
-
-		
-	};
-	
+			
+						
 	var table = document.getElementById('table') ;
     table.innerHTML = "<table width='5px' id='table_fuzzy' border='1'><tr><th>Type</th><th>Degree last_angle </th></tr></table>";
 	
@@ -2409,14 +2028,26 @@ function getFuzzySet() {
 	  }
 	  
 	  for (i = 0; i < hasil_2.length; i++) {
-	   console.log(hasil_2[i].type);
 	    // console.log(hasil[i].type + "   "  + hasil_2[i].derajat_keanggotaan);
 		 document.getElementById('table_fuzzy2').innerHTML += "<tr><td>" + hasil_2[i].type  + "</td><td>" + hasil_2[i].derajat_keanggotaan + "</td></tr>";
 	  }
 	  
-
+	 
+	  scoreDegree.push({type:'A',score:sumValueA},{type:'B',score:sumValueB},{type:'C',score:sumValueC},{type:'D',score:sumValueD},{type:'E',score:sumValueE},{type:'F',score:sumValueF},{type:'G',score:sumValueG},{type:'H',score:sumValueH},{type:'I',score:sumValueI},{type:'J',score:sumValueJ},{type:'K',score:sumValueK},{type:'L',score:sumValueL},{type:'M',score:sumValueM},{type:'N',score:sumValueN},{type:'O',score:sumValueO},{type:'P',score:sumValueP},{type:'Q',score:sumValueQ},{type:'R',score:sumValueR},{type:'S',score:sumValueS},{type:'T',score:sumValueT},{type:'U',score:sumValueU},{type:'V',score:sumValueV},{type:'W',score:sumValueW},{type:'X',score:sumValueX},{type:'Z',score:sumValueZ});	
+    for (i = 0; i < scoreDegree.length; i++) {
+	     console.log(scoreDegree[i].type + "   "  + scoreDegree[i].score);
+	  }
+tMax();  
 }
 
+function tMax() {
+console.log(scoreDegree);
+	  var max = (_.max(scoreDegree, function(chr) {return chr.score;}));
+	  document.getElementById("hasil").innerHTML = "Score huruf tertinggi adalah : <b>" + max.type + "</b> dengan probabilitas :" + max.score ;
+	 
+	
+	  
+};
 
 	</script>
 		<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
@@ -2521,6 +2152,7 @@ function getFuzzySet() {
 	 
 	  <button class="btn btn-1 btn-1c more" onclick="clearCanvas()">Ulangi</button>
 	  <button class="btn btn-1 btn-1c more" onclick="getFuzzySet()" href="#" >ok</button>
+	  <br><br>
       <p style="display:inline" id="hasil"></p>
 	  <br/><br/>
 	  <div id="table">
